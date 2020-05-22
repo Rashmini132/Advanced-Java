@@ -1,0 +1,138 @@
+package dbinsert;
+    import java.sql.Connection;
+	import java.sql.DriverManager;
+	import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+	import java.util.Scanner;
+
+
+	public class SwitchChoice { 
+
+		public static void main(String[] args) throws Exception {
+			// TODO Auto-generated method stub
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			String url="jdbc:oracle:thin:@localhost:1521:xe";
+			String username="system";
+			String password="manager";
+			Connection conn=DriverManager.getConnection(url,username,password);
+			
+			Statement st=conn.createStatement();
+			PreparedStatement p;
+			int idnum,x;
+			String temp;
+			Scanner s=new Scanner(System.in);
+			do {
+			System.out.println("Enter your choice 1.Insert 2.display 3.delete 4.update");
+			
+			int choice=s.nextInt();
+			switch(choice) {
+		case 1:
+			System.out.println("1.insert all  2. Insert particular row");
+			int c=s.nextInt();
+			switch(c)
+			{ case 1:
+				System.out.println("enter values");
+				int d=s.nextInt();
+				String n=s.next();
+				int e= s.nextInt();
+			
+			
+			  x=st.executeUpdate("insert into infosys values("+d+",'"+n+"',"+e+")");
+			  if (x!=0)
+			  
+			  System.out.println("inserted");
+			  break;
+			  case 2:
+		      System.out.println("enter id and salary of row  ");
+		      int i=s.nextInt();
+		      int sl=s.nextInt();
+			  x=st.executeUpdate("insert into infosys(id,salary)values("+i+","+sl+")" );
+			  if (x!=0)
+			  System.out.println("inserted");
+			  
+			}
+			break;
+			
+	        
+	        
+	         
+			
+	        
+		case 2:
+			
+		   System.out.println("Enter 1. to display all columns OR Enter 2.for paticular row");
+		   int ch =s.nextInt();
+		   switch(ch)
+		   { case 1: 
+		   p= conn.prepareStatement("select * from infosys");
+		   ResultSet rs= p.executeQuery();
+		   while(rs.next())
+		   { System.out.println(rs.getInt(1)+" " +rs.getString(2)+ " "+rs.getInt(3));
+		    
+		   }break;
+		   case 2: 
+		   System.out.println("Enter Id");
+		   idnum= s.nextInt();
+		   p=conn.prepareStatement("select * from infosys where id = "+idnum+" ");
+		   ResultSet rsa= p.executeQuery();
+		   while(rsa.next())
+		   { System.out.println(rsa.getInt(1)+" " +rsa.getString(2)+ " "+rsa.getInt(3)); 
+		   }
+			}
+		   break;
+		   
+		case 3:
+			System.out.println("1.Delete all rows 2. delete particular row");
+			int ck=s.nextInt();
+			switch(ck)
+			{ case 1:
+			  x=st.executeUpdate("delete * from infosys");
+			  System.out.println("deleted");
+			  break;
+			  case 2:
+		      System.out.println("enter id of row to be deleted");
+		      int idn=s.nextInt();
+			  x=st.executeUpdate("delete from infosys where id ="+idn+" " );
+			  System.out.println("deleted");
+			  
+				
+			} break;
+		case 4:
+			System.out.println("1.Name 2. salary");
+			int cm=s.nextInt();
+			switch(cm)
+			{ case 1: 
+				System.out.println("Enter name you want to change");
+				String nam=s.next();
+				System.out.println("Change name to ?");
+				String nw=s.next();
+				x=st.executeUpdate(" update infosys set name= '"+nw+"'  where name= '"+nam+"' ");
+				break;
+			  case 2:
+				System.out.println("Enter salary you want to change ");
+				int nj=s.nextInt();
+				System.out.println("Change salary to ?");
+				int dj=s.nextInt();
+				x=st.executeUpdate(" update infosys set salary= "+dj+"  where salary= '"+nj+"' ");
+				
+			}
+			break;
+				
+		   }
+		   
+		    
+		   
+		   
+			System.out.println("Do you want to continue?(y/n)");
+		     temp=s.next();   } while(temp.equals("y"));
+			
+		    
+				
+	        
+	        
+		}
+
+	}
+
+
