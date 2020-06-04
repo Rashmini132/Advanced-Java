@@ -1,0 +1,3 @@
+In hibernate, get() and load() are two methods which is used to fetch data for the given identifier.
+They both belong to Hibernate session class. Get() method return null, If no row is available in the session cache 
+or the database for the given identifier whereas load() method throws object not found exception. 
