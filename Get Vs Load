@@ -1,3 +1,7 @@
 In hibernate, get() and load() are two methods which is used to fetch data for the given identifier.
 They both belong to Hibernate session class. Get() method return null, If no row is available in the session cache 
 or the database for the given identifier whereas load() method throws object not found exception. 
+
+get() loads the data as soon as it’s called whereas load() returns a proxy object and loads data only when it’s actually required, so load() is better because it support lazy loading.
+Since load() throws exception when data is not found, we should use it only when we know data exists.
+We should use get() when we want to make sure data exists in the database.
